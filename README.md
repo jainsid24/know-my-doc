@@ -15,49 +15,25 @@ Other features of KnowMyDoc include:
 * Logging support for troubleshooting and analysis
 
 ## Getting Started
-
-### Prerequisites
-This utility requires Python 3.9 or later. You will also need to install some dependencies before using the utility.
-
-#### Dependencies
-
-The following dependencies are required:
-
+To use this utility:
+1. Clone the repository
 ```
-libmagic
-poppler-utils
-tesseract-ocr
-libxml2-dev
-libxslt1-dev
-git
+git clone https://github.com/jainsid24/know-my-doc
 ```
-
-You can install these dependencies on macOS by running:
-
+2. Build the Docker image by running the following command in the terminal:
 ```
-brew install libmagic poppler tesseract libxml2 libxslt git
+docker build -t know-my-doc:latest .
 ```
-
-### Installation
-
-* Clone this repository:
-
+3. Once the image is built, run the Docker container using the following command:
 ```
-git clone https://github.com/<username>/<repository_name>.git
+docker run -p 5001:5001 langchain:latest
 ```
-
-* Install the required Python packages:
-
+4. Use curl/postman for API call
 ```
-cd <repository_name>
-pip install -r requirements.txt
-```
-
-* Download the required NLTK data:
-
-```
-python -c "import nltk; nltk.download('punkt')"
-python -c "import nltk; nltk.download('averaged_perceptron_tagger')"
+curl --header "Content-Type: application/json" \
+     --request POST \
+     --data '{"question": "What is the capital of France?"}' \
+     http://<pods-ip-address>:5001/api/chat
 ```
 
 ## Configuration

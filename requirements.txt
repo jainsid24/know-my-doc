@@ -6,8 +6,9 @@ nltk==3.7
 openai==0.27.0
 layoutparser==0.3.4
 transformers==4.26.1
-unstructured==0.5.3
+unstructured==0.5.0
 python-magic==0.4.27
 pinecone-client==2.2.1
+beautifulsoup4
 -e git+https://github.com/facebookresearch/detectron2.git@v0.6#egg=detectron2
 
