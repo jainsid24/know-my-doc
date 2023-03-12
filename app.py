@@ -1,6 +1,6 @@
 import os
 import logging
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from langchain.chains.question_answering import load_qa_chain
 from langchain.document_loaders import DirectoryLoader
 from langchain.llms import OpenAIChat
@@ -29,9 +29,7 @@ with open("config.yaml", "r") as f:
 os.environ["OPENAI_API_KEY"] = config["openai_api_key"]
 
 template_dir = os.path.abspath("templates")
-
-app = Flask(__name__, template_folder=template_dir)
-
+app = Flask(__name__, template_folder=template_dir, static_folder="static")
 
 # Load the files
 loader = DirectoryLoader(config["data_directory"], glob=config["data_files_glob"])
@@ -72,8 +70,12 @@ Given the following extracted parts of a long document and a question, create a 
 Human: {human_input}
 Chatbot:""",
     ),
-    verbose=True,
+    verbose=False,
 )
+
+@app.route("/")
+def index():
+    return render_template("index.html")
 
 
 @app.route("/api/chat", methods=["POST"])
@@ -96,7 +98,7 @@ def chat():
 
         # Return the response as JSON
         return jsonify({"response": response})
-    
+
     except Exception as e:
         # Log the error and return an error response
         logger.error(f"Error while processing request: {e}")

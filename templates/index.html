@@ -1,55 +1,72 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <title>Chatbot</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  </head>
-  <body>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Chatbot</h3>
-            </div>
-            <div class="panel-body">
-              <div id="chatbox"></div>
-              <form id="chatform" autocomplete="off">
-                <div class="input-group">
-                  <input type="text" name="question" class="form-control" placeholder="Type your question here...">
-                  <span class="input-group-btn">
-                    <button type="submit" class="btn btn-primary">Send</button>
-                  </span>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <title>Chat Box</title>
+    <link rel="stylesheet" href="static/style.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-      $(document).ready(function() {
-        $('#chatform').submit(function(event) {
-          event.preventDefault();
-          var question = $('input[name="question"]').val();
+      // Send the user's question to the server and display the response
+      function sendQuestion() {
+        var question = $("#question-input").val();
+        if (question) {
+          var timestamp = new Date().toLocaleTimeString();
+          $("#chat-area").append("<div class='message user-message'><span class='timestamp'>" + timestamp + "</span>" + question + "</div>");
+          $("#question-input").val("");
+          $("#chat-area").scrollTop($("#chat-area").prop("scrollHeight"));
+          $("#loading-indicator").show();
           $.ajax({
-            url: '/api/chat',
-            type: 'POST',
-            data: JSON.stringify({'question': question}),
-            contentType: 'application/json;charset=UTF-8',
+            url: "/api/chat",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ question: question }),
             success: function(data) {
-              $('#chatbox').append('<div class="row"><div class="col-md-12"><p><strong>You:</strong> ' + question + '</p></div></div>');
-              $('#chatbox').append('<div class="row"><div class="col-md-12"><p><strong>Bot:</strong> ' + data.response + '</p></div></div>');
-              $('input[name="question"]').val('');
+              var response = data.response;
+              var typingSpeed = 50; // in milliseconds
+              var responseArray = response.split(" ");
+              var currentIndex = 0;
+              var responseTimer = setInterval(function() {
+                if (currentIndex < responseArray.length) {
+                  var responseText = responseArray.slice(0, currentIndex + 1).join(" ");
+                  $("#typing-indicator").html(responseText);
+                  currentIndex++;
+                } else {
+                  clearInterval(responseTimer);
+                  var timestamp = new Date().toLocaleTimeString();
+                  $("#typing-indicator").html("");
+                  $("#chat-area").append("<div class='message bot-message'><span class='timestamp'>" + timestamp + "</span>" + response + "</div>");
+                  $("#chat-area").scrollTop($("#chat-area").prop("scrollHeight"));
+                  $("#loading-indicator").hide();
+                }
+              }, typingSpeed);
             },
-            error: function(xhr, status, error) {
-              console.log('Error:', error);
+            error: function() {
+              alert("Unable to process the request.");
+              $("#loading-indicator").hide();
             }
           });
-        });
+        }
+      }
+
+      // Send the user's question when they press Enter in the text input field
+      $("#question-input").keydown(function(event) {
+        if (event.keyCode == 13) {
+          sendQuestion();
+          return false;
+        }
       });
     </script>
+  </head>
+  <body>
+    <div id="chat-box">
+      <div id="chat-area"></div>
+      <div id="input-area">
+        <input type="text" id="question-input" placeholder="Type your question here" />
+        <button id="send-button" onclick="sendQuestion()">Send</button>
+      </div>
+      <div id="typing-indicator"></div>
+      <div id="loading-indicator">
+        <div class="loader"></div>
+      </div>
+    </div>
   </body>
 </html>

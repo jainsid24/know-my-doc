@@ -1,5 +1,10 @@
 # KnowMyDoc Utility
 
+![Python version](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9-blue?style=flat-square)
+![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
+![OpenAI API key](https://img.shields.io/badge/OpenAI%20API%20key-required-red?style=flat-square)
+![Docker](https://img.shields.io/badge/docker-available-blue?style=flat-square)
+
 KnowMyDoc is a Python-based conversational AI utility that enables you to build a chatbot with your own data sources and web pages. With KnowMyDoc, you can easily create a chatbot that can answer complex questions by utilizing advanced machine learning techniques and natural language processing (NLP) algorithms.
 
 KnowMyDoc leverages the LangChain library for LLM prompt engineering and conversation chaining. This means that you can easily customize the chatbot's prompts and personalize its responses based on the context and tone of the conversation. With KnowMyDoc's sophisticated LLM-based approach, the chatbot can maintain a consistent and coherent conversation even when dealing with large amounts of data.
