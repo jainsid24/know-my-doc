@@ -4,14 +4,14 @@ Introducing KnowMyDoc, a Python-based conversational AI utility that enables you
 
 KnowMyDoc leverages the LangChain library for LLM prompt engineering and conversation chaining. This means that you can easily customize the chatbot's prompts and personalize its responses based on the context and tone of the conversation. With KnowMyDoc's sophisticated LLM-based approach, the chatbot can maintain a consistent and coherent conversation even when dealing with large amounts of data.
 
-KnowMyDoc also utilizes the Pinecone vector similarity search engine to enable fast and efficient lookup of relevant data. By creating embeddings of your documents and web pages, KnowMyDoc can quickly identify and retrieve the most relevant information for the user's queries.
+KnowMyDoc also utilizes the Chroma vector similarity search engine to enable fast and efficient lookup of relevant data. By creating embeddings of your documents and web pages, KnowMyDoc can quickly identify and retrieve the most relevant information for the user's queries.
 
 Other features of KnowMyDoc include:
 
 * Document loading from local data sources and web pages
 * Text splitting to optimize indexing and similarity search
 * NLTK support for text processing and tokenization
-* Support for OpenAI embeddings and vector stores, including Chroma and Pinecone
+* Support for OpenAI embeddings and vector stores, including Chroma
 * Logging support for troubleshooting and analysis
 
 ## Getting Started
@@ -41,8 +41,6 @@ curl --header "Content-Type: application/json" \
 Before you can use the utility, you need to set up the configuration file. The configuration file is a YAML file that contains the following options:
 
 * openai_api_key: Your OpenAI API key.
-* pinecone_api_key: Your Pinecone API key.
-* pinecone_api_env: The environment to use for Pinecone.
 * data_directory: The directory where your local data sources are located.
 * data_files_glob: A glob pattern that specifies which files in data_directory to use as data sources.
 * webpages: A list of URLs of webpages to use as data sources.
