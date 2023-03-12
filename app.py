@@ -1,6 +1,4 @@
 import os
-import openai
-import pinecone
 import logging
 from flask import Flask, request, jsonify
 from langchain.chains.question_answering import load_qa_chain
@@ -13,7 +11,6 @@ import yaml
 
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
-from langchain.vectorstores import Pinecone
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import Chroma
 
@@ -30,8 +27,6 @@ with open("config.yaml", "r") as f:
     config = yaml.safe_load(f)
 
 os.environ["OPENAI_API_KEY"] = config["openai_api_key"]
-os.environ["PINECONE_API_KEY"] = config["pinecone_api_key"]
-os.environ["PINECONE_API_ENV"] = config["pinecone_api_env"]
 
 template_dir = os.path.abspath("templates")
 
@@ -56,21 +51,7 @@ persona = config.get("persona", "default")
 text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
 texts = text_splitter.split_documents(result)
 embeddings = OpenAIEmbeddings(openai_api_key=config["openai_api_key"])
-
-# initialize pinecone
-logger.info("Initializing Pinecone...")
-pinecone.init(
-    api_key=config["pinecone_api_key"],  # find at app.pinecone.io
-    environment=config["pinecone_api_env"],
-)
-index_name = "dbqai"
-try:
-    pinecone.delete_index(index_name)
-except Exception as e:
-    logger.error(f"Failed to delete index: {e}")
-docsearch = Pinecone.from_texts(
-    [t.page_content for t in texts], embeddings, index_name=index_name
-)
+docsearch = Chroma.from_documents(texts, embeddings)
 
 # Initialize the QA chain
 logger.info("Initializing QA chain...")
