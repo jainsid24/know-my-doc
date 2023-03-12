@@ -32,6 +32,7 @@ template_dir = os.path.abspath("templates")
 
 app = Flask(__name__, template_folder=template_dir)
 
+
 # Load the files
 loader = DirectoryLoader(config["data_directory"], glob=config["data_files_glob"])
 docs = loader.load()
@@ -77,21 +78,29 @@ Chatbot:""",
 
 @app.route("/api/chat", methods=["POST"])
 def chat():
-    # Get the question from the request
-    question = request.json["question"]
-    documents = docsearch.similarity_search(question, include_metadata=True)
-    # Get the bot's response
-    response = chain(
-        {
-            "input_documents": documents,
-            "human_input": question,
-            "tone": tone,
-            "persona": persona,
-        },
-        return_only_outputs=True,
-    )["output_text"]
-    # Return the response as JSON
-    return jsonify({"response": response})
+    try:
+        # Get the question from the request
+        question = request.json["question"]
+        documents = docsearch.similarity_search(question, include_metadata=True)
+
+        # Get the bot's response
+        response = chain(
+            {
+                "input_documents": documents,
+                "human_input": question,
+                "tone": tone,
+                "persona": persona,
+            },
+            return_only_outputs=True,
+        )["output_text"]
+
+        # Return the response as JSON
+        return jsonify({"response": response})
+    
+    except Exception as e:
+        # Log the error and return an error response
+        logger.error(f"Error while processing request: {e}")
+        return jsonify({"error": "Unable to process the request."}), 500
 
 
 if __name__ == "__main__":
