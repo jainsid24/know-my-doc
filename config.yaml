@@ -1,0 +1,9 @@
+openai_api_key: "your openai api key"
+pinecone_api_key: "your pinecone api key"
+pinecone_api_env: "your pinecone api environment"
+data_directory: "path/to/data/directory"
+data_files_glob: "*.txt"
+webpages:
+  - "https://en.wikipedia.org/wiki/Black_hole"
+tone: "formal"
+persona: "expert"
