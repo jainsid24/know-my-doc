@@ -36,7 +36,7 @@ docker build -t know-my-doc:latest .
 ```
 3. Once the image is built, run the Docker container using the following command:
 ```
-docker run -p 5001:5001 langchain:latest
+docker run -p 5001:5001 know-my-doc
 ```
 4. Use curl/postman for API call
 ```
