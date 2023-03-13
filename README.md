@@ -2,23 +2,26 @@
 
 ![Python version](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9-blue?style=flat-square)
 ![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
+![Commit Activity](https://img.shields.io/github/last-commit/jainsid24/neural-network-simulation?style=flat-square)
+![Repo Size](https://img.shields.io/github/repo-size/jainsid24/neural-network-simulation?style=flat-square)
 ![OpenAI API key](https://img.shields.io/badge/OpenAI%20API%20key-required-red?style=flat-square)
 ![Docker](https://img.shields.io/badge/docker-available-blue?style=flat-square)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black?style=flat-square)
 
 ![Animated GIF](chat.gif)
 
-KnowMyDoc is a Python-based conversational AI utility that enables you to build a chatbot with your own data sources and web pages. With KnowMyDoc, you can easily create a chatbot that can answer complex questions by utilizing advanced machine learning techniques and natural language processing (NLP) algorithms.
+KnowMyDoc is a Python-based conversational AI utility that enables users to build a chatbot by utilizing advanced machine learning techniques and natural language processing (NLP) algorithms. The utility is fully containerized and API-driven, which allows for a seamless and rapid chatbot creation experience.
 
-KnowMyDoc leverages the [LangChain](https://github.com/hwchase17/langchain) library for LLM prompt engineering and conversation chaining. This means that you can easily customize the chatbot's prompts and personalize its responses based on the context and tone of the conversation. With KnowMyDoc's sophisticated LLM-based approach, the chatbot can maintain a consistent and coherent conversation even when dealing with large amounts of data.
+KnowMyDoc leverages the [LangChain](https://github.com/hwchase17/langchain) library for LLM prompt engineering and conversation chaining. With LangChain, users can easily customize the chatbot's prompts and personalize its responses based on the context and tone of the conversation. KnowMyDoc's sophisticated LLM-based approach ensures that the chatbot can maintain a consistent and coherent conversation even when dealing with large amounts of data.
 
-KnowMyDoc also utilizes the Chroma vector similarity search engine to enable fast and efficient lookup of relevant data. By creating embeddings of your documents and web pages, KnowMyDoc can quickly identify and retrieve the most relevant information for the user's queries.
+In addition, KnowMyDoc utilizes the Chroma vector similarity search engine to enable fast and efficient lookup of relevant data. By creating embeddings of users' documents and web pages, KnowMyDoc can quickly identify and retrieve the most relevant information for the user's queries.
 
 Other features of KnowMyDoc include:
 
-* Document loading from local data sources and web pages
+* Support for loading documents from local data sources and web urls
 * Text splitting to optimize indexing and similarity search
 * NLTK support for text processing and tokenization
-* Support for OpenAI embeddings and vector stores, including Chroma
+Support for OpenAI embeddings and vector stores, including Chroma
 * Logging support for troubleshooting and analysis
 
 ## Getting Started
