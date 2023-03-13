@@ -44,7 +44,7 @@ body {
   }
   
   .user-message {
-    background-color: #007aff;
+    background-image: linear-gradient(to bottom right, #1565C0, #0D47A1);
     color: #fff;
     align-self: flex-end;
     text-align: right;
@@ -91,6 +91,10 @@ body {
     color: #999;
     margin-right: 5px;
   }
+
+  .w-100 {
+    padding-top: 10px;
+  }
   
   /* Style the input area */
   #input-area {
@@ -117,7 +121,7 @@ body {
   }
   
   #send-button {
-    background-color: #007aff;
+    background-color: #0D47A1;
     color: #fff;
     border: none;
     padding: 12px 20px;

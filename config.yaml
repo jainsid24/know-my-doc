@@ -1,4 +1,4 @@
-openai_api_key: "Open API Key"
+openai_api_key: "Open API key"
 data_directory: "path/to/directory"
 data_files_glob: "*.txt"
 webpages:
