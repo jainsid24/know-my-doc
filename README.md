@@ -12,7 +12,7 @@
 
 KnowMyDoc is a Python-based conversational AI utility that enables users to build a reference enabled chatbot by utilizing advanced machine learning techniques and natural language processing (NLP) algorithms. The utility is fully containerized and API-driven, which allows for a seamless and rapid chatbot creation experience.
 
-KnowMyDoc leverages the [LangChain](https://github.com/hwchase17/langchain) library for LLM prompt engineering and conversation chaining. With LangChain, users can easily customize the chatbot's prompts and personalize its responses based on the context and tone of the conversation. KnowMyDoc's sophisticated LLM-based approach ensures that the chatbot can maintain a consistent and coherent conversation with sources even when dealing with large amounts of data.
+KnowMyDoc leverages the [LangChain](https://github.com/hwchase17/langchain) library for LLM prompt engineering and conversation chaining. With LangChain, users can easily customize the chatbot's prompts and personalize its responses based on the context and tone of the conversation. KnowMyDoc's sophisticated LLM-based approach ensures that the chatbot can maintain a consistent and coherent conversation even when dealing with large amounts of data and provide relevant sources per response.
 
 In addition, KnowMyDoc utilizes the Chroma vector similarity search engine to enable fast and efficient lookup of relevant data. By creating embeddings of users' documents and web pages, KnowMyDoc can quickly identify and retrieve the most relevant information for the user's queries.
 
