@@ -1,4 +1,4 @@
-# KnowMyDoc Utility
+# KnowMyDoc
 
 ![Python version](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9-blue?style=flat-square)
 ![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
@@ -10,7 +10,7 @@
 
 ![Animated GIF](chat.gif)
 
-KnowMyDoc is a GPT3.5 powered Python-based conversational AI utility that enables users to build a reference enabled chatbot by utilizing advanced machine learning techniques and natural language processing (NLP) algorithms. The utility is fully containerized and API-driven, which allows for a seamless and rapid chatbot creation experience.
+KnowMyDoc is a GPT3.5 powered Python-based conversational AI tool that enables users to build a reference enabled chatbot by utilizing advanced machine learning techniques and natural language processing (NLP) algorithms. The utility is fully containerized and API-driven, which allows for a seamless and rapid chatbot creation experience.
 
 KnowMyDoc leverages the [LangChain](https://github.com/hwchase17/langchain) library for LLM prompt engineering and conversation chaining. Users can easily customize the chatbot's prompts and personalize its responses based on the context and tone of the conversation. KnowMyDoc's LLM-based approach ensures that the chatbot can maintain a consistent and coherent conversation even when dealing with large amounts of data and provide relevant sources per response. The chatbots also remain in the confines of provided knowledge.
 
