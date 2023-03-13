@@ -108,7 +108,7 @@ def chat():
             session_counter = int(session_counter) + 1
 
         # Check if it's time to flush memory
-        if session_counter % 5 == 0:
+        if session_counter % 10 == 0:
             chain.memory.clear()
 
         # Set the session counter cookie
