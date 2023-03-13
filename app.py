@@ -65,7 +65,7 @@ chain = load_qa_chain(
 Given the following extracted parts of a long document and a question, Create a final answer with references ("SOURCES") in the tone {tone}. 
 If you don't know the answer, just say that you don't know. Don't try to make up an answer.
 ALWAYS return a "SOURCES" part in your answer.
-SOURCES should be hyperlinks from the documents.
+SOURCES should only be hyperlinks which are genuine and not made up.
 
 {context}
 
