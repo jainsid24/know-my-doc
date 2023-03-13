@@ -36,9 +36,10 @@
                   $("#typing-indicator").html("");
                   var response = data.response.replace(/\n/g, "<br>");
                   if (response) {
-                    $("#chat-area").append("<div class='bot-timestamp'><p class='small mb-1 text-muted'>" + timestamp + "</p></div><div class='container message bot-message'><div class='row'><div class='w-100'><span>" + response.replace(/\n/g, "<br><br>").replace(/(https?:\/\/[^\s]+)/g, "<a href='$1' target='_blank'>$1</a>") + "<span></div></div></div>");
-                    $("#chat-area").scrollTop($("#chat-area").prop("scrollHeight"));
-                    $("#loading-indicator").hide();
+                      $("#chat-area").append("<div class='bot-timestamp'><p class='small mb-1 text-muted'>" + timestamp + "</p></div><div class='container message bot-message'><div class='row'><div class='w-100'><span>" + response.replace(/\n/g, "<br><br>").replace(/(https?:\/\/[^\s]+)/g, "<a href='$1' target='_blank'>$1</a>") + "<span></div></div></div>");
+                      $("#chat-area").append("<div class='timestamp'><p class='small mb-1 text-muted'>" + timestamp + "</p></div><div class='container message user-message'><div class='row'><div class='w-100'><span>" + question + "<span></div></div></div>");
+                      $("#chat-area").scrollTop($("#chat-area").prop("scrollHeight"));
+                      $("#loading-indicator").hide();
                   }
                 }
               }, typingSpeed);

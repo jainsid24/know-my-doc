@@ -26,6 +26,8 @@ body {
   #chat-area {
     overflow-y: auto;
     max-height: 600px; /* set a maximum height for the chat area */
+    display: flex;
+    flex-direction: column;
   }
   
   @keyframes fadein {
@@ -49,6 +51,7 @@ body {
     align-self: flex-end;
     text-align: right;
     margin-bottom: 10px;
+    margin-right: 5px;
     border-radius: 10px 10px 0 10px;
     padding: 10px 15px;
     max-width: 70%;
@@ -68,6 +71,7 @@ body {
     max-width: 70%;
     font-size: 16px;
     white-space: pre-wrap;
+    align-self: flex-start;
     float: right;
   }
 
@@ -87,6 +91,8 @@ body {
     font-size: 12px;
     color: #999;
     margin-right: 5px;
+    text-align: right;
+    align-self: flex-end;
   }
 
   .bot-timestamp {
@@ -94,7 +100,7 @@ body {
     font-size: 12px;
     color: #999;
     margin-right: 5px;
-    text-align: right;
+    align-self: flex-start;
   }
 
   .w-100 {
