@@ -20,7 +20,7 @@
             contentType: "application/json",
             data: JSON.stringify({ question: question }),
             success: function(data) {
-              var response = data.response;
+              var response = data.response.replace(/\n/g, "<br><br>");
               var typingSpeed = 50; // in milliseconds
               var responseArray = response.split(" ");
               var currentIndex = 0;
@@ -33,11 +33,13 @@
                   clearInterval(responseTimer);
                   var timestamp = new Date().toLocaleTimeString();
                   $("#typing-indicator").html("");
-                  $("#chat-area").append("<div class='message bot-message'><span class='timestamp'>" + timestamp + "</span>" + response + "</div>");
+                  var response = data.response.replace(/\n/g, "<br>");
+                  $("#chat-area").append('<div class="message bot-message"><span class="timestamp">' + timestamp + '</span>' + response.replace(/\n/g, '<br><br>').replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>') + '</div>');
                   $("#chat-area").scrollTop($("#chat-area").prop("scrollHeight"));
                   $("#loading-indicator").hide();
                 }
               }, typingSpeed);
+
             },
             error: function() {
               alert("Unable to process the request.");
@@ -60,7 +62,7 @@
     <div id="chat-box">
       <div id="chat-area"></div>
       <div id="input-area">
-        <input type="text" id="question-input" placeholder="Type your question here" />
+        <input type="text" id="question-input" placeholder="Ask here" />
         <button id="send-button" onclick="sendQuestion()">Send</button>
       </div>
       <div id="typing-indicator"></div>

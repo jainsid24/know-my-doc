@@ -1,4 +1,4 @@
-FROM python:3.9-slim-buster
+FROM python:3.10
 
 # Set working directory
 WORKDIR /app
@@ -14,7 +14,7 @@ RUN apt-get update && \
 
 # Copy requirements file and install dependencies
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
 RUN [ "python", "-c", "import nltk; nltk.download('punkt', download_dir='/usr/local/nltk_data')" ]
 RUN [ "python", "-c", "import nltk; nltk.download('averaged_perceptron_tagger', download_dir='/usr/local/nltk_data')" ]

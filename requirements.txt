@@ -10,5 +10,6 @@ unstructured==0.5.0
 python-magic==0.4.27
 pinecone-client==2.2.1
 beautifulsoup4
+chromadb==0.3.11
 -e git+https://github.com/facebookresearch/detectron2.git@v0.6#egg=detectron2
 
