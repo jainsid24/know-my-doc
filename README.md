@@ -42,7 +42,7 @@ docker run -p 5001:5001 langchain:latest
 ```
 curl --header "Content-Type: application/json" \
      --request POST \
-     --data '{"question": "What is the capital of France?"}' \
+     --data '{"question": "When was JWST launched?"}' \
      http://<pods-ip-address>:5001/api/chat
 ```
 
