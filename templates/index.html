@@ -11,19 +11,7 @@
         var question = $("#question-input").val();
         if (question) {
           var timestamp = new Date().toLocaleTimeString();
-          $("#chat-area").append("\
-          <div class='container message user-message'>\
-            <div class='row'>\
-              <div class='col-lg'>\
-                <span class='timestamp'>" + timestamp + "</span>\
-              </div>\
-            </div>\
-            <div class='row'>\
-              <div class='w-100'>\
-                <span>" + question + "<span>\
-              </div>\
-            </div>\
-          </div>");
+          $("#chat-area").append("<div class='container message user-message'><div class='row'><div class='col-lg'><span class='timestamp'>" + timestamp + "</span></div></div><div class='row'><div class='w-100'><span>" + question + "<span></div></div></div>");
           $("#question-input").val("");
           $("#chat-area").scrollTop($("#chat-area").prop("scrollHeight"));
           $("#loading-indicator").show();
@@ -47,19 +35,7 @@
                   var timestamp = new Date().toLocaleTimeString();
                   $("#typing-indicator").html("");
                   var response = data.response.replace(/\n/g, "<br>");
-                  $("#chat-area").append("\
-                    <div class='container message bot-message'>\
-                      <div class='row'>\
-                        <div class='col-lg'>\
-                          <span class='timestamp'>" + timestamp + "</span>\
-                        </div>\
-                      </div>\
-                      <div class='row'>\
-                        <div class='w-100'>\
-                          <span>" + response.replace(/\n/g, "<br><br>").replace(/(https?:\/\/[^\s]+)/g, "<a href='$1' target='_blank'>$1</a>") + "<span>\
-                        </div>\
-                      </div>\
-                    </div>");
+                  $("#chat-area").append("<div class='container message bot-message'><div class='row'><div class='col-lg'><span class='timestamp'>" + timestamp + "</span></div></div><div class='row'><div class='w-100'><span>" + response.replace(/\n/g, "<br><br>").replace(/(https?:\/\/[^\s]+)/g, "<a href='$1' target='_blank'>$1</a>") + "<span></div></div></div>");
                   $("#chat-area").scrollTop($("#chat-area").prop("scrollHeight"));
                   $("#loading-indicator").hide();
                 }
@@ -95,5 +71,14 @@
         <div class="loader"></div>
       </div>
     </div>
+    <script>
+      var input = document.getElementById("question-input");
+      input.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          document.getElementById("send-button").click();
+        }
+      });
+      </script>
   </body>
 </html>
