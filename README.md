@@ -9,7 +9,7 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black?style=flat-square)
 
 <p align="center">
-    <img src="chat.gif" alt="Chat" width="500" style="max-width: 100%;"/>
+    <img src="chat.gif" alt="Chat" width="250" style="max-width: 100%;"/>
 </p>
 <p align="center">
     <em><b>KnowMyDoc Chat</b></em>
