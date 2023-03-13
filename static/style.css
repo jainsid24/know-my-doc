@@ -46,12 +46,12 @@ body {
   .user-message {
     background-image: linear-gradient(to bottom right, #1565C0, #0D47A1);
     color: #fff;
-    align-self: flex-end;
-    text-align: right;
+    align-self: self-start;
+    text-align: left;
     margin-bottom: 10px;
     border-radius: 10px 10px 0 10px;
     padding: 10px 15px;
-    max-width: 70%;
+    max-width: fit-content;
     word-wrap: break-word;
     font-size: 16px;
     white-space: pre-wrap;
@@ -60,12 +60,12 @@ body {
   .bot-message {
     background-color: #fff;
     color: #000;
-    text-align: left;
+    text-align: right;
     margin-bottom: 10px;
     border-radius: 10px 10px 10px 0;
     padding: 10px 15px;
     word-wrap: break-word;
-    max-width: 70%;
+    max-width: fit-content;
     font-size: 16px;
     white-space: pre-wrap;
     float: right;
