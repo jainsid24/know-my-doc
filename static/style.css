@@ -48,8 +48,8 @@ body {
   .user-message {
     background-image: linear-gradient(to bottom right, #79b6f2, #6daff0);
     color: #ffffff;
-    align-self: self-start;
-    text-align: left;
+    align-self: self-end;
+    text-align: right;
     margin-bottom: 10px;
     margin-right: 5px;
     border-radius: 10px 10px 0 10px;
@@ -58,12 +58,13 @@ body {
     word-wrap: break-word;
     font-size: 16px;
     white-space: pre-wrap;
+    float: right;
   }
   
   .bot-message {
     background-color: #f0f0f0;
     color: #000000;
-    text-align: right;
+    text-align: left;
     margin-bottom: 10px;
     border-radius: 10px 10px 10px 0;
     padding: 10px 15px;
@@ -72,7 +73,6 @@ body {
     font-size: 16px;
     white-space: pre-wrap;
     align-self: flex-start;
-    float: right;
   }
 
   .bot-message a {
@@ -92,7 +92,7 @@ body {
     color: #999;
     margin-right: 5px;
     text-align: right;
-    align-self: flex-end;
+    float: right;
   }
 
   .bot-timestamp {
@@ -100,8 +100,6 @@ body {
     font-size: 12px;
     color: #999;
     margin-right: 5px;
-    align-self: flex-start;
-    text-align: right;
   }
 
   .w-100 {
