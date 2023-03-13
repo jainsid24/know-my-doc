@@ -8,7 +8,12 @@
 ![Docker](https://img.shields.io/badge/docker-available-blue?style=flat-square)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black?style=flat-square)
 
-![Animated GIF](chat.gif)
+<p align="center">
+    <img src="chat.gif" alt="Chat" width="200" style="max-width: 100%;"/>
+</p>
+<p align="center">
+    <em><b>KnowMyDoc Chat</b></em>
+</p>
 
 KnowMyDoc is a GPT3.5 powered Python-based conversational AI tool that enables users to build a reference enabled chatbot by utilizing advanced machine learning techniques and natural language processing (NLP) algorithms. The utility is fully containerized and API-driven, which allows for a seamless and rapid chatbot creation experience.
 
