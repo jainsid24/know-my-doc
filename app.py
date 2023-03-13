@@ -62,7 +62,7 @@ chain = load_qa_chain(
         input_variables=["chat_history", "human_input", "context", "tone", "persona"],
         template="""You are a chatbot who acts like {persona}, having a conversation with a human.
 
-Given the following extracted parts of a long document and a question, create a final answer only in the {tone} tone. Use only the sources in the document to create a response."
+Given the following extracted parts of a long document and a question, create a final answer only in the {tone} tone. Use only the sources in the document to create a response. Always quote the source in the end"
 
 {context}
 
