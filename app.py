@@ -99,15 +99,29 @@ def chat():
             },
             return_only_outputs=True,
         )["output_text"]
+        
+        # Increment message counter
+        session_counter = request.cookies.get('session_counter')
+        if session_counter is None:
+            session_counter = 0
+        else:
+            session_counter = int(session_counter) + 1
 
-        # Return the response as JSON
-        return jsonify({"response": response})
+        # Check if it's time to flush memory
+        if session_counter % 5 == 0:
+            chain.memory.clear()
+
+        # Set the session counter cookie
+        resp = jsonify({"response": response})
+        resp.set_cookie('session_counter', str(session_counter))
+
+        # Return the response as JSON with the session counter cookie
+        return resp
 
     except Exception as e:
         # Log the error and return an error response
         logger.error(f"Error while processing request: {e}")
         return jsonify({"error": "Unable to process the request."}), 500
-
 
 if __name__ == "__main__":
     app.run(debug=True)
