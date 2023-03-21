@@ -1,8 +1,9 @@
 openai_api_key: "Open API Key"
-data_directory: "base" 
+data_directory: "path/to/directory" 
 data_files_glob: "*.txt"
 webpages:
   - "https://en.wikipedia.org/wiki/James_Webb_Space_Telescope"
   - "https://en.wikipedia.org/wiki/Black_hole"
+  - "https://en.wikipedia.org/wiki/Roko%27s_basilisk"
 tone: "formal"
 persona: "buddha"
