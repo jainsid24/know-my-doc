@@ -31,6 +31,18 @@ Other features of KnowMyDoc include:
 Support for OpenAI embeddings and vector stores, including Chroma
 * Logging support for troubleshooting and analysis
 
+## Configuration
+
+Before you can use the utility, you need to set up the configuration file. The configuration file is a YAML file that contains the following options:
+
+* openai_api_key: Your OpenAI API key.
+* data_directory: The directory where your local data sources are located.
+* data_files_glob: A glob pattern that specifies which files in data_directory to use as data sources.
+* webpages: A list of URLs of webpages to use as data sources.
+* tone: The tone to use for the chatbot's responses (e.g., "formal", "informal", "friendly", etc.).
+* persona: The persona to use for the chatbot.
+* You can copy the config.example.yaml file to config.yaml and modify the options as needed.
+
 ## Getting Started
 To use this utility:
 1. Clone the repository
@@ -51,43 +63,6 @@ curl --header "Content-Type: application/json" \
      --request POST \
      --data '{"question": "When was JWST launched?"}' \
      http://<pods-ip-address>:5001/api/chat
-```
-
-## Configuration
-
-Before you can use the utility, you need to set up the configuration file. The configuration file is a YAML file that contains the following options:
-
-* openai_api_key: Your OpenAI API key.
-* data_directory: The directory where your local data sources are located.
-* data_files_glob: A glob pattern that specifies which files in data_directory to use as data sources.
-* webpages: A list of URLs of webpages to use as data sources.
-* tone: The tone to use for the chatbot's responses (e.g., "formal", "informal", "friendly", etc.).
-* persona: The persona to use for the chatbot.
-* You can copy the config.example.yaml file to config.yaml and modify the options as needed.
-
-## Usage
-
-To start the chatbot, run:
-
-```
-python app.py
-```
-
-This will start the chatbot on port 5000.
-
-To use the chatbot, send a POST request to http://localhost:5000/api/chat with a JSON payload containing the question to ask, like this:
-
-```
-curl -X POST \
-  http://localhost:5000/api/chat \
-  -H 'Content-Type: application/json' \
-  -d '{"question": "What is the capital of France?"}'
-```
-
-This will return a JSON response containing the chatbot's answer to the question:
-
-```
-{"response": "The capital of France is Paris."}
 ```
 
 ## Contributing
