@@ -12,6 +12,9 @@ from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import Chroma
 import yaml
 import logging
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -21,7 +24,7 @@ logger = logging.getLogger(__name__)
 with open("config.yaml", "r") as f:
     config = yaml.safe_load(f)
 
-os.environ["OPENAI_API_KEY"] = config["openai_api_key"]
+os.environ["OPENAI_API_KEY"] = os.getenv("openai_api_key") 
 
 # Load the files
 loader = DirectoryLoader(config["data_directory"], glob=config["data_files_glob"])
@@ -41,7 +44,7 @@ persona = config.get("persona", "default")
 
 text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
 texts = text_splitter.split_documents(result)
-embeddings = OpenAIEmbeddings(openai_api_key=config["openai_api_key"])
+embeddings = OpenAIEmbeddings(openai_api_key=os.getenv("openai_api_key"))
 docsearch = Chroma.from_documents(texts, embeddings)
 
 # Initialize the QA chain

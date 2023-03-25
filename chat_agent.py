@@ -10,6 +10,10 @@ from flask import request, jsonify, render_template
 import os
 import logging
 import yaml
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -19,7 +23,7 @@ logger = logging.getLogger(__name__)
 with open("config.yaml", "r") as f:
     config = yaml.safe_load(f)
 
-os.environ["OPENAI_API_KEY"] = config["openai_api_key"]
+os.environ["OPENAI_API_KEY"] = os.getenv("openai_api_key") 
 
 llm = OpenAI(temperature=0)
 
