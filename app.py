@@ -5,9 +5,10 @@ template_dir = os.path.abspath("templates")
 app = Flask(__name__, template_folder=template_dir, static_folder="static")
 
 import chat
+import chat_agent
 
-app.add_url_rule('/', view_func=chat.index)
-app.add_url_rule('/api/chat', methods=['POST'], view_func=chat.chat)
+app.add_url_rule('/', view_func=chat_agent.index)
+app.add_url_rule('/api/chat', methods=['POST'], view_func=chat_agent.chat)
 
 if __name__ == "__main__":
     app.run(debug=True)

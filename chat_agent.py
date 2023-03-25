@@ -1,12 +1,9 @@
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.vectorstores import Chroma
-from langchain.text_splitter import CharacterTextSplitter
-from langchain import OpenAI, VectorDBQA, LLMMathChain, SerpAPIWrapper
-from langchain.document_loaders import DirectoryLoader, WebBaseLoader
 from langchain.agents import initialize_agent, Tool
-from langchain.tools import BaseTool
-from langchain.llms import OpenAI
+from langchain.chat_models import ChatOpenAI
+from langchain.memory import ConversationBufferMemory
 from flask import request, jsonify, render_template
+from textblob import TextBlob
+import webbrowser
 import os
 import logging
 import yaml
@@ -20,46 +17,96 @@ with open("config.yaml", "r") as f:
     config = yaml.safe_load(f)
 
 os.environ["OPENAI_API_KEY"] = config["openai_api_key"]
+os.environ["LANGCHAIN_HANDLER"] = "langchain"
+# define a function to calculate the fibonacci number
+def fib(n):
+    if n == 0:
+        return 0
+    elif n == 1:
+        return 1
+    else:
+        return fib(n - 1) + fib(n - 2)
 
-llm = OpenAI(temperature=0)
+# define a function which sorts the input string alphabetically
+def sort_string(string):
+    return ''.join(sorted(string))
 
-# Load the files
-loader = DirectoryLoader(config["data_directory"], glob=config["data_files_glob"])
-docs = loader.load()
+# define a function to turn a word in to an encrypted word
+def encrypt_word(word):
+    encrypted_word = ""
+    for letter in word:
+        encrypted_word += chr(ord(letter) + 1)
+    return encrypted_word
 
-webpages = config.get("webpages", [])
-web_docs = []
-for webpage in webpages:
-    logger.info(f"Loading data from webpage {webpage}")
-    loader = WebBaseLoader(webpage)
-    web_docs += loader.load()
+# define a function to decrypt an encrypted word
+def decrypt_word(word):
+    decrypted_word = ""
+    for letter in word:
+        decrypted_word += chr(ord(letter) - 1)
+    return decrypted_word
 
-result = docs + web_docs
+# Define a function to perform sentiment analysis
+def analyze_sentiment(text):
+    blob = TextBlob(text)
+    sentiment = blob.sentiment.polarity
+    if sentiment > 0:
+        return "Positive"
+    elif sentiment < 0:
+        return "Negative"
+    else:
+        return "Neutral"
 
-# Create vectorstore
-text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
-ruff_texts = text_splitter.split_documents(result)
-# ruff_db = Chroma.from_documents(ruff_texts, embeddings, collection_name="ruff")
-# ruff = VectorDBQA.from_chain_type(llm=llm, chain_type="stuff", vectorstore=ruff_db)
+# Define a function to open a google search for a given topic
+def search_google(topic):
+    webbrowser.open("https://www.google.com/search?q=" + topic)
+    return "Opening Google Search for " + topic 
 
+llm=ChatOpenAI(temperature=0)
 
-embeddings = OpenAIEmbeddings()
-docsearch = Chroma.from_documents(ruff_texts, embeddings, collection_name="state-of-union")
-state_of_union = VectorDBQA.from_chain_type(llm=llm, chain_type="stuff", vectorstore=docsearch)
-llm_math_chain = LLMMathChain(llm=llm, verbose=True)
+# define a function to write your response to the output file
+def write_to_file(response):
+    with open("output.txt", "w") as f:
+        f.write(response)
+    return "Successfully wrote to file output.txt"
+
 tools = [
     Tool(
-        name = "State of Union QA System",
-        func=state_of_union.run,
-        description="useful for when you need to answer questions about the most recent state of the union address. Input should be a fully formed question."
+        name = "Fibonacci",
+        func = lambda n: str(fib(int(n))),
+        description = "use when you want to calculate the nth fibanacci number"
     ),
     Tool(
-        name="Calculator",
-        func=llm_math_chain.run,
-        description="useful for when you need to answer questions about math"
+        name = "Sort String",
+        func = lambda string: sort_string(string),
+        description = "use when you want to sort a string alphabetically"
+    ),
+    Tool(
+        name = "Encrypt Word",
+        func = lambda word: encrypt_word(word),
+        description = "use when you want to encrypt a word"
+    ),
+    Tool(
+        name = "Decrypt Word",
+        func = lambda word: decrypt_word(word),
+        description = "use when you want to decrypt a word"
+    ),
+    Tool(
+        name = "Write to output file",
+        func = lambda response: write_to_file(response),
+        description = "use when you want to write your response to the output file"
+    ),
+    Tool(
+        name = "Analyze Sentiment",
+        func = lambda text: analyze_sentiment(text),
+        description = "use when you want to analyze the sentiment of a text"
+    ),
+    Tool(
+        name = "Search Google",
+        func = lambda topic: search_google(topic),
+        description = "use when you want to search google for a topic"
     )
 ]
-
+memory = ConversationBufferMemory(memory_key="chat_history")
 agent = initialize_agent(tools, llm, agent="zero-shot-react-description", verbose=True)
 
 
@@ -72,6 +119,7 @@ def chat():
         question = request.json["question"]
 
         response = agent.run(question)
+        print("Response : {}",format(response))
         
         # Increment message counter
         session_counter = request.cookies.get('session_counter')
@@ -82,7 +130,7 @@ def chat():
 
         # Check if it's time to flush memory
         # if session_counter % 10 == 0:
-            # agent.memory.clear()
+        #     agent.memory.clear()
 
         # Set the session counter cookie
         resp = jsonify({"response": response})
