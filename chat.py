@@ -24,8 +24,6 @@ logger = logging.getLogger(__name__)
 with open("config.yaml", "r") as f:
     config = yaml.safe_load(f)
 
-os.environ["OPENAI_API_KEY"] = os.getenv("openai_api_key") 
-
 # Load the files
 loader = DirectoryLoader(config["data_directory"], glob=config["data_files_glob"])
 docs = loader.load()
@@ -44,7 +42,7 @@ persona = config.get("persona", "default")
 
 text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
 texts = text_splitter.split_documents(result)
-embeddings = OpenAIEmbeddings(openai_api_key=os.getenv("openai_api_key"))
+embeddings = OpenAIEmbeddings(openai_api_key=os.getenv("OPENAI_API_KEY"))
 docsearch = Chroma.from_documents(texts, embeddings)
 
 # Initialize the QA chain
@@ -71,8 +69,10 @@ Chatbot:""",
     verbose=False,
 )
 
+
 def index():
     return render_template("index.html")
+
 
 def chat():
     try:
@@ -90,9 +90,9 @@ def chat():
             },
             return_only_outputs=True,
         )["output_text"]
-        
+
         # Increment message counter
-        session_counter = request.cookies.get('session_counter')
+        session_counter = request.cookies.get("session_counter")
         if session_counter is None:
             session_counter = 0
         else:
@@ -104,7 +104,7 @@ def chat():
 
         # Set the session counter cookie
         resp = jsonify({"response": response})
-        resp.set_cookie('session_counter', str(session_counter))
+        resp.set_cookie("session_counter", str(session_counter))
 
         # Return the response as JSON with the session counter cookie
         return resp

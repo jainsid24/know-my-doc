@@ -23,8 +23,6 @@ logger = logging.getLogger(__name__)
 with open("config.yaml", "r") as f:
     config = yaml.safe_load(f)
 
-os.environ["OPENAI_API_KEY"] = os.getenv("openai_api_key") 
-
 llm = OpenAI(temperature=0)
 
 # Load the files
@@ -47,21 +45,25 @@ ruff_texts = text_splitter.split_documents(result)
 # ruff = VectorDBQA.from_chain_type(llm=llm, chain_type="stuff", vectorstore=ruff_db)
 
 
-embeddings = OpenAIEmbeddings()
-docsearch = Chroma.from_documents(ruff_texts, embeddings, collection_name="state-of-union")
-state_of_union = VectorDBQA.from_chain_type(llm=llm, chain_type="stuff", vectorstore=docsearch)
+embeddings = OpenAIEmbeddings(openai_api_key=os.getenv("OPENAI_API_KEY"))
+docsearch = Chroma.from_documents(
+    ruff_texts, embeddings, collection_name="state-of-union"
+)
+state_of_union = VectorDBQA.from_chain_type(
+    llm=llm, chain_type="stuff", vectorstore=docsearch
+)
 llm_math_chain = LLMMathChain(llm=llm, verbose=True)
 tools = [
     Tool(
-        name = "State of Union QA System",
+        name="State of Union QA System",
         func=state_of_union.run,
-        description="useful for when you need to answer questions about the most recent state of the union address. Input should be a fully formed question."
+        description="useful for when you need to answer questions about the most recent state of the union address. Input should be a fully formed question.",
     ),
     Tool(
         name="Calculator",
         func=llm_math_chain.run,
-        description="useful for when you need to answer questions about math"
-    )
+        description="useful for when you need to answer questions about math",
+    ),
 ]
 
 agent = initialize_agent(tools, llm, agent="zero-shot-react-description", verbose=True)
@@ -70,15 +72,16 @@ agent = initialize_agent(tools, llm, agent="zero-shot-react-description", verbos
 def index():
     return render_template("index.html")
 
+
 def chat():
     try:
         # Get the question from the request
         question = request.json["question"]
 
         response = agent.run(question)
-        
+
         # Increment message counter
-        session_counter = request.cookies.get('session_counter')
+        session_counter = request.cookies.get("session_counter")
         if session_counter is None:
             session_counter = 0
         else:
@@ -86,11 +89,11 @@ def chat():
 
         # Check if it's time to flush memory
         # if session_counter % 10 == 0:
-            # agent.memory.clear()
+        # agent.memory.clear()
 
         # Set the session counter cookie
         resp = jsonify({"response": response})
-        resp.set_cookie('session_counter', str(session_counter))
+        resp.set_cookie("session_counter", str(session_counter))
 
         # Return the response as JSON with the session counter cookie
         return resp
