@@ -1,0 +1,1 @@
+Celabrain is AI-powered assistant for Celanese's internal knowledge base.
